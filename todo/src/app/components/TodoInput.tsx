@@ -1,9 +1,14 @@
+// TodoInput.jsx;
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/TodoInput.module.css";
 import TodoList, { Todo } from "./TodoList";
 import { todo } from "../constant/data";
+
 const TodoInput = () => {
+  const [todoList, setTodoList] = useState<Todo[]>(todo);
+  const [status, setStatus] = useState<boolean>(false);
+  const [count, setCount] = useState<number>(0);
   const [todoDataObj, setTodoDataObj] = useState<Todo>({
     id: Date.now(),
     title: "",
@@ -19,16 +24,24 @@ const TodoInput = () => {
     }));
   };
 
+  function handleStatus() {
+    setCount((count) => count + 1);
+  }
+
   const handleAddTodo = () => {
-    todo.push(todoDataObj);
-    console.log("todo", todo);
+    setTodoList((prevTodoList) => [...prevTodoList, todoDataObj]);
+
     setTodoDataObj({
       id: Date.now(),
       title: "",
       description: "",
       status: false,
     });
+    handleStatus();
   };
+  useEffect(() => {
+    console.log("count", count);
+  }, []);
 
   return (
     <div>
@@ -60,7 +73,7 @@ const TodoInput = () => {
           Add
         </button>
       </div>
-      <TodoList />
+      <TodoList todoList={todoList} />
     </div>
   );
 };

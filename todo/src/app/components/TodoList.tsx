@@ -1,37 +1,34 @@
+// TodoList.jsx
 "use client";
 import React, { useEffect, useState } from "react";
-import { todo } from "../constant/data";
 
-export interface Todo {
+interface Todo {
   id: number;
   title: string;
   description: string;
   status: boolean;
 }
 
-const TodoList: React.FC = () => {
-  const [todoData, setTodo] = useState<Todo[]>(todo);
-  const [status, setStatus] = useState(false);
+interface TodoListProps {
+  todoList: Todo[];
+}
+
+const TodoList: React.FC<TodoListProps> = ({ todoList }) => {
+  console.log("todoList", todoList);
+  const [todos, setTodos] = useState<Todo[]>(todoList);
 
   const handleStatus = (id: number) => {
-    const updatedTodo = todoData.map((el) =>
-      el.id === id ? { ...el, status: !el.status } : el
+    const updatedTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, status: !todo.status } : todo
     );
+    setTodos(updatedTodos);
+  };
 
-    setTodo(updatedTodo);
-  };
-  //HandleDelete item;
   const handleDelete = (id: number) => {
-    const deleteTodo = todoData.filter((el) => {
-      if (el.id !== id) {
-        return el;
-      }
-    });
-    setTodo(deleteTodo);
+    const updatedTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(updatedTodos);
   };
-  useEffect(() => {
-    setStatus(true);
-  }, []);
+
   return (
     <div
       style={{
@@ -42,14 +39,14 @@ const TodoList: React.FC = () => {
         padding: "10px",
       }}
     >
-      {todoData.map((el: Todo) => (
-        <div key={el.id} style={{ border: "1px solid #ccc", padding: 10 }}>
-          <h3>{el.title}</h3>
-          <p>{el.description}</p>
-          <button onClick={() => handleStatus(el.id)}>
-            {el.status ? "Completed" : "Incomplete"}
+      {todos.map((todo) => (
+        <div key={todo.id} style={{ border: "1px solid #ccc", padding: 10 }}>
+          <h3>{todo.title}</h3>
+          <p>{todo.description}</p>
+          <button onClick={() => handleStatus(todo.id)}>
+            {todo.status ? "Completed" : "Incomplete"}
           </button>
-          <button onClick={() => handleDelete(el.id)}>Delete</button>
+          <button onClick={() => handleDelete(todo.id)}>Delete</button>
         </div>
       ))}
     </div>
