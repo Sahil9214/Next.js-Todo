@@ -20,6 +20,15 @@ const TodoList: React.FC = () => {
 
     setTodo(updatedTodo);
   };
+  //HandleDelete item;
+  const handleDelete = (id: number) => {
+    const deleteTodo = todoData.filter((el) => {
+      if (el.id !== id) {
+        return el;
+      }
+    });
+    setTodo(deleteTodo);
+  };
   useEffect(() => {
     setStatus(true);
   }, []);
@@ -40,6 +49,7 @@ const TodoList: React.FC = () => {
           <button onClick={() => handleStatus(el.id)}>
             {el.status ? "Completed" : "Incomplete"}
           </button>
+          <button onClick={() => handleDelete(el.id)}>Delete</button>
         </div>
       ))}
     </div>
