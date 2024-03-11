@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import styles from "../styles/TodoInput.module.css";
-import { Todo } from "./TodoList";
+import TodoList, { Todo } from "./TodoList";
 import { todo } from "../constant/data";
 const TodoInput = () => {
   const [todoDataObj, setTodoDataObj] = useState<Todo>({
@@ -21,6 +21,7 @@ const TodoInput = () => {
 
   const handleAddTodo = () => {
     todo.push(todoDataObj);
+    console.log("todo", todo);
     setTodoDataObj({
       id: Date.now(),
       title: "",
@@ -30,8 +31,8 @@ const TodoInput = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <div>
+    <div>
+      <div className={styles.container}>
         <label className={styles.label}>Add Title</label>
         <br />
         <input
@@ -59,6 +60,7 @@ const TodoInput = () => {
           Add
         </button>
       </div>
+      <TodoList />
     </div>
   );
 };

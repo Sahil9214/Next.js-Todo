@@ -33,7 +33,7 @@ const TodoList: React.FC = () => {
         padding: "10px",
       }}
     >
-      {todoData.reverse().map((el: Todo) => (
+      {todoData.map((el: Todo) => (
         <div key={el.id} style={{ border: "1px solid #ccc", padding: 10 }}>
           <h3>{el.title}</h3>
           <p>{el.description}</p>
